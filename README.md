@@ -26,7 +26,7 @@ Machine learning classification project to predict **startup success** (binary o
 | **Splitting** | Train-Test Split | Separated data (e.g., 80/20) to ensure unbiased model testing. |
 | **Imbalance** | **SMOTE Over-sampling** | Applied to the **training set** only to synthesize minority class samples and address class imbalance. |
 | **Models** | Random Forest Classifier | Used for baseline performance and initial feature importance analysis. |
-| **Models** | XGBoost Classifier | Utilized an optimized gradient boosting framework for final high-performance prediction. |
+| **Models** | XGBoost Classifier, SVC, DNN | Utilized for  high-performance prediction. |
 | **Optimization** | GridSearchCV + Cross-Validation | Performed systematic hyperparameter tuning with K-Fold cross-validation for robust model selection. |
 
 ---
@@ -40,9 +40,28 @@ Machine learning classification project to predict **startup success** (binary o
 | **Interpretation** | Feature Importance Analysis | Extracted scores from tree models to identify the most predictive features (e.g., $\mathbf{F\_{na}}$ features were top-ranked). |
 | **Visualization** | Confusion Matrix | Visualized model errors (False Positives/Negatives) for deeper analysis. |
 
-### Modelling Results
+## Modelling Results
 
-T
+The best performing model was an hyperparameter tuned XGBoost model, although it performed the best RFC and SVC models by only about 1.5-2% in terms of total accuracy and by 1% in ROC-AUC score. The confusion matrix of the predictions of the best XGBoost model, and the resulting evaluation scores are given below.
+
+### Confusion Matrix
+
+The confusion matrix visually breaks down the model's predictions on the Test Set.
+
+| | **Predicted: Unsuccessful (0)** | **Predicted: Successful (1)** |
+| :--- | :--- | :--- |
+| **Actual: Unsuccessful (0)** | **True Negative (TN)**: 303 | **False Positive (FP)**: 51 |
+| **Actual: Successful (1)** | **False Negative (FN)**: 106 | **True Positive (TP)**: 93 |
+
+**Accuracy**: 71.6%
+
+### Final Test Set Results (Per-Class Breakdown)
+
+| Class | Outcome | Precision | Recall | F1-Score | Support |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **0** | **Unsuccessful** | 74.1% | 85.6% | 79.4% | 354 |
+| **1** | **Successful** | 64.6% | 46.7% | 54.2% | 199 |
+
 
 
 ## Key Finding
