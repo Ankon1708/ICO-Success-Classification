@@ -1,10 +1,10 @@
 # ICO-Success-Classification
 
-## 🎯 Overview
+## Overview
 
 Machine learning classification project to predict **startup success** (binary outcome) using a Random Forest and XGBoost ensemble. The project's highlight is the implementation of **Missing Indicator Imputation**, which dramatically improved model performance by leveraging the predictive power of missingness.
 
-## 🛠️ Key Techniques & Workflow
+## Key Techniques & Workflow
 
 ### 1. Data Understanding & Preparation
 
@@ -40,11 +40,16 @@ Machine learning classification project to predict **startup success** (binary o
 | **Interpretation** | Feature Importance Analysis | Extracted scores from tree models to identify the most predictive features (e.g., $\mathbf{F\_{na}}$ features were top-ranked). |
 | **Visualization** | Confusion Matrix | Visualized model errors (False Positives/Negatives) for deeper analysis. |
 
-## 💡 Key Finding
+### Modelling Results
+
+T
+
+
+## Key Finding
 
 The **Missing Indicator Imputation** technique for `priceUSD` and `teamSize` yielded a significant **7-8% increase in model accuracy**. This confirms that the act of a value being missing was a highly predictive signal in the dataset, which the $\mathbf{F\_{na}}$ features successfully captured.
 
-## 📂 Project Files
+## Project Files
 
 | File Name | Purpose |
 | :--- | :--- |
