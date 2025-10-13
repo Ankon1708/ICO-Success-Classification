@@ -1,34 +1,52 @@
 # ICO-Success-Classification
-This project explores the application of supervised machine learning models to predict the success of Initial Coin Offerings (ICOs) using a real-world dataset of over 2,700 ICOs.
-The goal is to model success based on a mix of financial, social, and campaign features extracted from public ICO data.
 
-## Project Overview
-ICOs are a popular form of blockchain-based crowdfunding, but their success is highly unpredictable due to decentralized and often noisy data. This project:
+## 🎯 Overview
 
-Cleans and transforms a large dataset containing categorical, numeric, datetime, and textual features.
+Machine learning classification project to predict **startup success** (binary outcome) using a Random Forest and XGBoost ensemble. The project's highlight is the implementation of **Missing Indicator Imputation**, which dramatically improved model performance by leveraging the predictive power of missingness.
 
-Engineers new features (e.g., campaign duration).
+## 🛠️ Key Techniques & Workflow
 
-Handles high-cardinality categorical variables using one-hot encoding.
+### 1. Data Understanding & Preparation
 
-Compares two classification models — Random Forest Classifier (RFC) and Support Vector Classifier (SVC) — to determine which performs better in predicting campaign outcomes.
+| Category | Technique | Description |
+| :--- | :--- | :--- |
+| **Data Quality** | Missing Value Assessment | Calculated `NaN` counts/percentages to guide imputation strategy. |
+| **Transformation** | Log Transformation | Applied $log(1+x)$ to features like `priceUSD` to address heavy skewness. |
+| **Missing Data** | **Missing Indicator Imputation** | **(Core)** Created $\mathbf{F\_{na}}$ binary features to flag missingness (1 = missing, 0 = present). |
+| **Missing Data** | Sentinel Value Imputation | Replaced `NaN` values with a distinct, out-of-range value (**-1**) for `priceUSD` and `teamSize`. |
+| **Categorical** | One-Hot Encoding | Converted nominal features (`countryRegion`) into multiple binary columns. |
+| **Scaling** | Standard Scaling | Normalized numerical features (mean 0, std 1) for consistent model input. |
 
-## Key Features
-Data Preprocessing: Outlier removal, normalization, handling missing data, category consolidation.
+---
 
-Feature Engineering: Derived variables such as campaign duration and encoded categorical fields.
+### 2. Modeling & Training Pipeline
 
-### Model Training
+| Category | Technique | Description |
+| :--- | :--- | :--- |
+| **Splitting** | Train-Test Split | Separated data (e.g., 80/20) to ensure unbiased model testing. |
+| **Imbalance** | **SMOTE Over-sampling** | Applied to the **training set** only to synthesize minority class samples and address class imbalance. |
+| **Models** | Random Forest Classifier | Used for baseline performance and initial feature importance analysis. |
+| **Models** | XGBoost Classifier | Utilized an optimized gradient boosting framework for final high-performance prediction. |
+| **Optimization** | GridSearchCV + Cross-Validation | Performed systematic hyperparameter tuning with K-Fold cross-validation for robust model selection. |
 
-Random Forest Classifier: 50 trees, tuned hyperparameters.
+---
 
-Support Vector Classifier: RBF kernel with regularization.
+### 3. Evaluation & Interpretation
 
-Evaluation Metrics: Accuracy, Precision, Recall, F1 Score, and ROC-AUC.
+| Category | Technique | Description |
+| :--- | :--- | :--- |
+| **Evaluation** | ROC AUC Score | Primary metric to assess the model's ability to distinguish between classes. |
+| **Evaluation** | PRFC Metrics | Used Precision, Recall, and F1-Score for a comprehensive view of classification performance. |
+| **Interpretation** | Feature Importance Analysis | Extracted scores from tree models to identify the most predictive features (e.g., $\mathbf{F\_{na}}$ features were top-ranked). |
+| **Visualization** | Confusion Matrix | Visualized model errors (False Positives/Negatives) for deeper analysis. |
 
-Comparison & Interpretation: Trade-offs analyzed between precision-focused and recall-focused predictions.
+## 💡 Key Finding
 
-## Tech Stack
-Python (Pandas, NumPy, Scikit-learn, Imbalanced-learn, Matplotlib, Seaborn)
+The **Missing Indicator Imputation** technique for `priceUSD` and `teamSize` yielded a significant **7-8% increase in model accuracy**. This confirms that the act of a value being missing was a highly predictive signal in the dataset, which the $\mathbf{F\_{na}}$ features successfully captured.
 
-Jupyter Notebooks
+## 📂 Project Files
+
+| File Name | Purpose |
+| :--- | :--- |
+| `Data_Understanding.ipynb` | Initial EDA, visualization, and raw data quality checks. |
+| `Modelling.ipynb` | Complete ML pipeline from feature engineering to final model training and evaluation. |
